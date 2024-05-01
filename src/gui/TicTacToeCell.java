@@ -17,6 +17,8 @@ import logic.GameLogic;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
+import static javafx.scene.paint.Color.*;
+
 public class TicTacToeCell extends Pane{
 	
 	private boolean isDrawn;
@@ -35,8 +37,13 @@ public class TicTacToeCell extends Pane{
 		this.setxPosition(x);
 		this.setyPosition(y);
 		//To be implemented
-		
-		
+		setPrefWidth(150);
+		setPrefHeight(150);
+		setMinWidth(150);
+		setMinHeight(150);
+		setBaseColor(MOCCASIN);
+		initializeCellColor();
+
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				onClickHandler();
@@ -46,7 +53,18 @@ public class TicTacToeCell extends Pane{
 
 	private void onClickHandler() {
 		//To be implemented
-		
+		if (!GameLogic.getInstance().isGameEnd()) {
+			if (!isDrawn()) {
+				if (GameLogic.getInstance().isOturn()) {
+					Image oImg = new Image(ClassLoader.getSystemResource(oURL).toString());
+					draw(oImg, AQUA);
+				} else {
+					Image xImg = new Image(ClassLoader.getSystemResource(xURL).toString());
+					draw(xImg, YELLOW);
+				}
+				GameLogic.getInstance().drawNumber(getxPosition(), getyPosition());
+			}
+		}
 	}
 	
 	private void draw(Image image, Color backgroundColor) {
@@ -63,6 +81,8 @@ public class TicTacToeCell extends Pane{
 	public void initializeCellColor() {
 		this.setDrawn(false);
 		//To be implemented
+		setBackground(Background.fill(getBaseColor()));
+		setDrawn(false);
 	}
 	
 	public boolean isDrawn() {

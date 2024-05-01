@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.GameLogic;
 
+import static javafx.geometry.Pos.CENTER;
+
 public class ControlPane extends VBox{
 	
 	private Text gameText;
@@ -25,26 +27,43 @@ public class ControlPane extends VBox{
 		super();
 		this.ticTacToePane = ticTacToePane;
 		//To be implemented
-		
+		setAlignment(CENTER);
+		setPrefWidth(300);
+		setSpacing(20);
+		initializeGameText();
+		initializeNewGameButton();
+		getChildren().addAll(gameText, newGameButton);
 	}
 	
 	private void initializeGameText() {
 		//To be implemented
-		
+		gameText = new Text("O Turn");
+		gameText.setFont(Font.font(35));
 	}
 	
 	public void updateGameText(String text) {
 		//To be implemented
-		
+		gameText.setText(text);
 	}
 	
 	private void initializeNewGameButton() {
 		//To be implemented
-		
+		newGameButton = new Button("New Game");
+		newGameButton.setPrefWidth(100);
+		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				newGameButtonHandler();
+			}
+		});
 	}
 	
 	private void newGameButtonHandler() {
 		//To be implemented
-		
+		GameLogic.getInstance().newGame();
+		gameText.setText("O Turn");
+		for (TicTacToeCell cell: ticTacToePane.getAllCells()) {
+			cell.initializeCellColor();
+		}
 	}
 }
